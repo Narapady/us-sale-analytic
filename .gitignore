@@ -1,0 +1,5 @@
+.venv
+sales.csv
+sales_preprocessed.csv
+poetry.lock
+.env
