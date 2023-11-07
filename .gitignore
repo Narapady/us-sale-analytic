@@ -1,5 +1,7 @@
 .venv
-sales.csv
-sales_preprocessed.csv
+dataset/sales.csv
+dataset/sales_preprocessed.csv
+dataset
 poetry.lock
+us-sale-cred.json
 .env

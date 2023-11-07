@@ -3,18 +3,31 @@ from pathlib import Path
 import pandas as pd
 from google.cloud import bigquery
 
-
-def preprocess(file_path: str):
-    df = pd.read_csv(file_path)
-    cols = []
+def rename_columns(df: pd.DataFrame):
+    cols : list[str] = []
     for col in df.columns:
         split_col = col.split(" ")
         if len(split_col) == 2:
             cols.append(f"{split_col[0].lower()}_{split_col[1].lower()}")
         else:
             cols.append(f"{split_col[0].lower()}")
+    return cols
 
-    df.columns = cols
+def preprocess(file_path: str):
+    """
+    This function preprocesses the data from a given file path.
+    It reads the data, modifies the column names, and changes the data types of certain columns.
+    The preprocessed data is then saved to a new CSV file.
+
+    Parameters:
+    file_path (str): The path to the file to be preprocessed.
+
+    Returns:
+    None
+    """
+    df = pd.read_csv(file_path)
+    df.columns = rename_columns(df)
+
     df["order_date"] = pd.to_datetime(df["order_date"])
     df["qty_ordered"] = df["qty_ordered"].astype("int64")
     df["customer_since"] = pd.to_datetime(df["customer_since"])
@@ -56,6 +69,7 @@ def load_to_bigquery(client: bigquery.Client, dataset_id: str, table_id: str):
         else None
         for col in df.columns
     ]
+    
     # Create a job configuration
     job_config = bigquery.LoadJobConfig(
         schema=schema,
