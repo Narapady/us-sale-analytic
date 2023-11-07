@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: us_sale
+    schema: us_sale_dataset
+    tables:
+      - name: sales_processed
