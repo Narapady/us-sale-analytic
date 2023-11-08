@@ -2,13 +2,12 @@
     materialized = 'table',
 ) }}
 
-WITH dim_order AS (
+WITH dim_product AS (
 
     SELECT
-        item_id AS order_id,
-        order_date,
-        status AS order_status,
-        payment_method,
+        ref_num AS product_id,
+        category,
+        sku,
         CURRENT_TIMESTAMP() AS created_at
     FROM
         {{ ref('stg_sales_processed') }}
@@ -17,15 +16,12 @@ unique_rows AS (
     SELECT
         *,
         ROW_NUMBER() over (
-            PARTITION BY order_id,
-            order_date,
-            order_status,
-            payment_method
+            PARTITION BY product_id
             ORDER BY
                 created_at DESC
         ) AS row_num
     FROM
-        dim_order
+        dim_product
 )
 SELECT
     *

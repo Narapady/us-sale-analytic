@@ -28,7 +28,6 @@ erDiagram
         integer order_id PK
         date order_date
         string status
-        integer item_id
         string payment_method
         timestamp created_at
     }
@@ -36,9 +35,7 @@ erDiagram
     dim_product {
         integer product_id PK
         string category
-        integer item_id
         string sku
-        integer ref_num
         timestamp created_at
 
     }

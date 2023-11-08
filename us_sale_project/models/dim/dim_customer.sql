@@ -21,6 +21,7 @@ WITH dim_customer AS (
         zip,
         region,
         user_name,
+
         CURRENT_TIMESTAMP() AS created_at
     FROM
         {{ ref('stg_sales_processed') }}

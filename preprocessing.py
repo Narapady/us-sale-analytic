@@ -3,15 +3,17 @@ from pathlib import Path
 import pandas as pd
 from google.cloud import bigquery
 
+
 def rename_columns(df: pd.DataFrame):
-    cols : list[str] = []
+    cols: list[str] = []
     for col in df.columns:
         split_col = col.split(" ")
         if len(split_col) == 2:
-            cols.append(f"{split_col[0].lower()}_{split_col[1].lower()}")
+            cols.append(f"{split_col[1].lower()}_{split_col[1].lower()}")
         else:
             cols.append(f"{split_col[0].lower()}")
     return cols
+
 
 def preprocess(file_path: str):
     """
@@ -69,7 +71,7 @@ def load_to_bigquery(client: bigquery.Client, dataset_id: str, table_id: str):
         else None
         for col in df.columns
     ]
-    
+
     # Create a job configuration
     job_config = bigquery.LoadJobConfig(
         schema=schema,

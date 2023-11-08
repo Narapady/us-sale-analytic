@@ -9,7 +9,7 @@ WITH source AS (
 ),
 renamed AS (
     SELECT
-        CAST({{ adapter.quote("order_id") }} AS INTEGER) AS {{ adapter.quote("order_id") }},
+        {{ adapter.quote("order_id") }},
         CAST({{ adapter.quote("order_date") }} AS DATE) AS {{ adapter.quote("order_date") }},
         {{ adapter.quote("status") }},
         CAST({{ adapter.quote("item_id") }} AS INTEGER) AS {{ adapter.quote("item_id") }},
