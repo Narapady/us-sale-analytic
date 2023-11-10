@@ -5,7 +5,6 @@
 WITH fct_sales AS (
 
     SELECT
-        order_id AS id,
         item_id AS order_id,
         ref_num AS product_id,
         date_id,
@@ -37,6 +36,7 @@ unique_rows AS (
         fct_sales
 )
 SELECT
+    ROW_NUMBER() over() AS sale_id,
     *
 FROM
     unique_rows

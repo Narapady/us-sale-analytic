@@ -37,4 +37,8 @@ models:
       +materialized: table
       +schema: stg_us_sale
     dim:
+      +enabled: true
+      +materialized: table
+    fct:
+      +enabled: true
       +materialized: table

@@ -7,7 +7,7 @@ from google.cloud import bigquery
 def rename_columns(df: pd.DataFrame):
     """
     This function renames the columns of a DataFrame.
-    It splits the column names by space and joins them with an underscore.
+    It  splits the column names by space and joins them with an underscore.
     If the column name is a single word, it is converted to lowercase.
 
     Parameters:
@@ -16,6 +16,7 @@ def rename_columns(df: pd.DataFrame):
     Returns:
     list[str]: The list of renamed column names.
     """
+
     cols: list[str] = []
     for col in df.columns:
         split_col = col.split(" ")
@@ -88,6 +89,31 @@ def create_table_bigquery(client: bigquery.Client, dataset_id: str, table_id: st
         return None
 
 
+def generate_schema(df: pd.DataFrame) -> list:
+    """
+    This function generates a schema for a DataFrame.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame for which the schema is to be generated.
+
+    Returns:
+    list: The list of SchemaField objects.
+    """
+    schema = [
+        bigquery.SchemaField(col, "integer")
+        if df[col].dtype == "int64"
+        else bigquery.SchemaField(col, "float")
+        if df[col].dtype == "float64"
+        else bigquery.SchemaField(col, "string")
+        if df[col].dtype == "object"
+        else bigquery.SchemaField(col, "timestamp")
+        if df[col].dtype == "datetime64"
+        else None
+        for col in df.columns
+    ]
+    return schema
+
+
 def load_to_bigquery(client: bigquery.Client, dataset_id: str, table_id: str):
     """
     This function loads a preprocessed CSV file to a BigQuery table.
@@ -102,19 +128,7 @@ def load_to_bigquery(client: bigquery.Client, dataset_id: str, table_id: str):
     """
     # Set the dataset and table where you want to upload the CSV file
     df = pd.read_csv("sales_preprocessed.csv")
-
-    schema = [
-        bigquery.SchemaField(col, "integer")
-        if df[col].dtype == "int64"
-        else bigquery.SchemaField(col, "float")
-        if df[col].dtype == "float64"
-        else bigquery.SchemaField(col, "string")
-        if df[col].dtype == "object"
-        else bigquery.SchemaField(col, "timestamp")
-        if df[col].dtype == "datetime64"
-        else None
-        for col in df.columns
-    ]
+    schema = generate_schema(df)
 
     # Create a job configuration
     job_config = bigquery.LoadJobConfig(

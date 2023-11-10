@@ -54,7 +54,7 @@ erDiagram
         timestamp created_at
     }
     fct_sales {
-        integer id PK
+        integer sale_id PK
         integer order_id FK
         integer product_id FK
         integer customer_id FK
