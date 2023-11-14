@@ -53,7 +53,7 @@ def preprocess(file_path: str):
     df.to_csv("sales_preprocessed.csv", index=False)
 
 
-def bigquery_client(cred_file: str):
+def bigquery_client(cred_file: str) -> bigquery.Client:
     """
     This function creates a BigQuery client from a service account JSON file.
 

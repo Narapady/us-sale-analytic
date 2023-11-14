@@ -2,6 +2,10 @@
 dataset/sales.csv
 dataset/sales_preprocessed.csv
 dataset
+logs
+target
+tests
+.gitkeep
 poetry.lock
 us-sale-cred.json
 .env
