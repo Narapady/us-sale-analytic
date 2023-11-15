@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
+import sqlalchemy
 from google.cloud import bigquery
 
 
@@ -21,13 +22,13 @@ def rename_columns(df: pd.DataFrame):
     for col in df.columns:
         split_col = col.split(" ")
         if len(split_col) == 2:
-            cols.append(f"{split_col[1].lower()}_{split_col[1].lower()}")
+            cols.append(f"{split_col[0].lower()}_{split_col[1].lower()}")
         else:
             cols.append(f"{split_col[0].lower()}")
     return cols
 
 
-def preprocess(file_path: str):
+def preprocessed_data(file_path: str):
     """
     This function preprocesses the data from a given file path.
     It reads the data, modifies the column names, and changes
@@ -49,8 +50,9 @@ def preprocess(file_path: str):
     df["zip"] = df["zip"].astype("str")
     df["age"] = df["age"].astype("int64")
     df["cust_id"] = df["cust_id"].astype("int64")
-
     df.to_csv("sales_preprocessed.csv", index=False)
+
+    return df
 
 
 def bigquery_client(cred_file: str) -> bigquery.Client:
@@ -143,14 +145,37 @@ def load_to_bigquery(client: bigquery.Client, dataset_id: str, table_id: str):
     load_job.result()
 
 
+def load_to_postgres(df: pd.DataFrame):
+    # Create an engine instance
+    alchemy_engine = sqlalchemy.create_engine(
+        "postgresql+psycopg2://narapadychhuoy@localhost/postgres", pool_recycle=3600
+    )
+
+    # Connect to PostgreSQL server
+    db_connection = alchemy_engine.connect()
+
+    # Create table (if it doesn't exist) and write DataFrame into PostgreSQL
+    df.to_sql("us_sales", db_connection, if_exists="replace", index=False)
+
+    # Close the database connection
+    db_connection.close()
+
+
 def main():
-    # Define the path to the service account key
-    service_account_key_path = Path.cwd() / "us-sale-cred.json"
-    # Create a BigQuery client using the service account key
-    client = bigquery_client(service_account_key_path)
+    csv_file_path = Path.cwd() / "dataset/sales.csv"
     dataset_id = "us_sale_dataset"  # Define the dataset ID
     table_id = "sales_processed"  # Define the table ID
-    preprocess("sales.csv")  # Preprocess the sales.csv file
+
+    data = preprocessed_data(csv_file_path)  # Preprocess the sales.csv file
+    # load data to postgres
+    load_to_postgres(data)
+
+    # Define the path to the service account key
+    service_account_key_path = Path.cwd() / "us-sale-cred.json"
+
+    # Create a BigQuery client using the service account key
+    client = bigquery_client(service_account_key_path)
+
     # If the table is successfully created in BigQuery
     if create_table_bigquery(client, dataset_id, table_id) is not None:
         # Load the preprocessed data to the BigQuery table
