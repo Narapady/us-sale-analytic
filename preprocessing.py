@@ -33,13 +33,13 @@ def preprocessed_data(file_path: str):
     This function preprocesses the data from a given file path.
     It reads the data, modifies the column names, and changes
     the data types of certain columns. The preprocessed data is
-    then saved to a new CSV file.
+    then saved to a new CSV file. then it return the dataframe
 
     Parameters:
     file_path (str): The path to the file to be preprocessed.
 
     Returns:
-    None
+    DataFrame
     """
     df = pd.read_csv(file_path)
     df.columns = rename_columns(df)
