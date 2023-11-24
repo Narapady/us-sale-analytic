@@ -45,7 +45,7 @@ renamed AS (
         {{ adapter.quote("region") }},
         {{ adapter.quote("user_name") }},
         {{ adapter.quote("discount_percent") }},
-        CURRENT_TIMESTAMP() {{ adapter.quote("updated_at")}}
+        CURRENT_TIMESTAMP() {{ adapter.quote("updated_at") }}
     FROM
         source
 )

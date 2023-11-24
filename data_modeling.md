@@ -1,5 +1,6 @@
 # Dimensional Modeling
 
+# Analysis
 ## US Sale Transaction
 ```mermaid
 erDiagram
@@ -68,7 +69,8 @@ erDiagram
         timestamp created_at
     }
 ```
-
+## Metrics
+1. 
 
 
 

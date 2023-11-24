@@ -42,3 +42,6 @@ models:
     fct:
       +enabled: true
       +materialized: table
+    obt:
+      +enabled: true
+      +materialized: table
