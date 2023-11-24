@@ -1,8 +1,9 @@
-from bq_etl import bigquery_client
-from components.layout import create_layout
 from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 from dash_bootstrap_components.themes import BOOTSTRAP
+
+from bq_etl import bigquery_client
+from components.layout import create_layout
 from data.data_loader import us_sale_df
 
 
