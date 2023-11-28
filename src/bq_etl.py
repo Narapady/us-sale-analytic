@@ -5,29 +5,6 @@ import sqlalchemy
 from google.cloud import bigquery
 
 
-def rename_columns(df: pd.DataFrame):
-    """
-    This function renames the columns of a DataFrame.
-    It  splits the column names by space and joins them with an underscore.
-    If the column name is a single word, it is converted to lowercase.
-
-    Parameters:
-    df (pd.DataFrame): The DataFrame whose columns are to be renamed.
-
-    Returns:
-    list[str]: The list of renamed column names.
-    """
-
-    cols: list[str] = []
-    for col in df.columns:
-        split_col = col.split(" ")
-        if len(split_col) == 2:
-            cols.append(f"{split_col[0].lower()}_{split_col[1].lower()}")
-        else:
-            cols.append(f"{split_col[0].lower()}")
-    return cols
-
-
 def preprocessed_data(file_path: str):
     """
     This function preprocesses the data from a given file path.
@@ -38,9 +15,19 @@ def preprocessed_data(file_path: str):
     Parameters:
     file_path (str): The path to the file to be preprocessed.
 
-    Returns:
-    DataFrame
+    Returns: DataFrame
     """
+
+    def rename_columns(df: pd.DataFrame):
+        cols: list[str] = []
+        for col in df.columns:
+            split_col = col.split(" ")
+            if len(split_col) == 2:
+                cols.append(f"{split_col[0].lower()}_{split_col[1].lower()}")
+            else:
+                cols.append(f"{split_col[0].lower()}")
+        return cols
+
     df = pd.read_csv(file_path)
     df.columns = rename_columns(df)
 
@@ -51,8 +38,6 @@ def preprocessed_data(file_path: str):
     df["age"] = df["age"].astype("int64")
     df["cust_id"] = df["cust_id"].astype("int64")
     df.to_csv("sales_preprocessed.csv", index=False)
-
-    return df
 
 
 def bigquery_client(cred_file: str) -> bigquery.Client:
@@ -91,31 +76,6 @@ def create_table_bigquery(client: bigquery.Client, dataset_id: str, table_id: st
         return None
 
 
-def generate_schema(df: pd.DataFrame) -> list:
-    """
-    This function generates a schema for a DataFrame.
-
-    Parameters:
-    df (pd.DataFrame): The DataFrame for which the schema is to be generated.
-
-    Returns:
-    list: The list of SchemaField objects.
-    """
-    schema = [
-        bigquery.SchemaField(col, "integer")
-        if df[col].dtype == "int64"
-        else bigquery.SchemaField(col, "float")
-        if df[col].dtype == "float64"
-        else bigquery.SchemaField(col, "string")
-        if df[col].dtype == "object"
-        else bigquery.SchemaField(col, "timestamp")
-        if df[col].dtype == "datetime64"
-        else None
-        for col in df.columns
-    ]
-    return schema
-
-
 def load_to_bigquery(client: bigquery.Client, dataset_id: str, table_id: str):
     """
     This function loads a preprocessed CSV file to a BigQuery table.
@@ -128,6 +88,22 @@ def load_to_bigquery(client: bigquery.Client, dataset_id: str, table_id: str):
     Returns:
     None
     """
+
+    def generate_schema(df: pd.DataFrame):
+        schema = [
+            bigquery.SchemaField(col, "integer")
+            if df[col].dtype == "int64"
+            else bigquery.SchemaField(col, "float")
+            if df[col].dtype == "float64"
+            else bigquery.SchemaField(col, "string")
+            if df[col].dtype == "object"
+            else bigquery.SchemaField(col, "timestamp")
+            if df[col].dtype == "datetime64"
+            else None
+            for col in df.columns
+        ]
+        return schema
+
     # Set the dataset and table where you want to upload the CSV file
     df = pd.read_csv("sales_preprocessed.csv")
     schema = generate_schema(df)
@@ -177,7 +153,7 @@ def main():
     client = bigquery_client(service_account_key_path)
 
     # If the table is successfully created in BigQuery
-    if create_table_bigquery(client, dataset_id, table_id) is not None:
+    if create_table_bigquery(client, dataset_id, table_id):
         # Load the preprocessed data to the BigQuery table
         load_to_bigquery(client, dataset_id, table_id)
 

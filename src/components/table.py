@@ -4,8 +4,7 @@ from dash import Dash, dash_table, html
 
 def render(app: Dash, data: pd.DataFrame) -> html.Div:
     return html.Div(
-        className="app-table",
-        children=[
+        [
             html.H3("US Sales Dataset (First 20 Rows)"),
             dash_table.DataTable(
                 data.head(20).to_dict("records"),
@@ -13,4 +12,5 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
                 style_table={"overflowX": "auto"},
             ),
         ],
+        className="app-table",
     )

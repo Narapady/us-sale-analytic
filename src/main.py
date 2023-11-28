@@ -1,4 +1,4 @@
-from dash import Dash, dcc, html
+from dash import Dash
 from dash.dependencies import Input, Output
 from dash_bootstrap_components.themes import BOOTSTRAP
 
@@ -12,9 +12,8 @@ def main():
     client = bigquery_client(cred_filepath)
     data = us_sale_df(client)
     app = Dash(external_stylesheets=[BOOTSTRAP])
-    app.title = "US Sales Dashboard"
     app.layout = create_layout(app, data)
-    app.run()
+    app.run(debug=True)
 
 
 if __name__ == "__main__":
