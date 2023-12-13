@@ -34,4 +34,5 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
             ),
             dcc.Graph(id="selected_col"),
         ],
+        style={"padding": 10, "display": "inline-block", "flex": 1},
     )

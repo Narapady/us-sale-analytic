@@ -12,8 +12,13 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
             html.Hr(),
             table.render(app, data),
             html.Hr(),
-            bar_chart.render(app, data),
-            group_bar_chat.render(app, data),
+            html.Div(
+                [
+                    bar_chart.render(app, data),
+                    group_bar_chat.render(app, data),
+                ],
+                style={"display": "flex"},
+            ),
             html.Div(
                 [
                     pie_chart.render(app, data),

@@ -26,4 +26,5 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
                 id="gender_sale",
             ),
         ],
+        style={"padding": 10, "display": "inline-block", "flex": 1},
     )
