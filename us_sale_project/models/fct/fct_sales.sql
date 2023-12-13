@@ -36,8 +36,7 @@ unique_rows AS (
         fct_sales
 )
 SELECT
-    ROW_NUMBER() over() AS sale_id,
-    *
+    ROW_NUMBER() over() AS sale_id,*
 FROM
     unique_rows
 WHERE
