@@ -9,7 +9,7 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
         df = data[["total_amount", "gender", "category", "year"]]
         df = df[df["year"] == year]
         fig = px.histogram(
-            df,
+            data_frame=df,
             x="category",
             y="total_amount",
             color="gender",

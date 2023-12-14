@@ -1,7 +1,7 @@
 import pandas as pd
 from dash import Dash, html
 
-from . import bar_chart, group_bar_chat, pie_chart, table
+from . import bar_chart, group_bar_chat, map, pie_chart, table
 
 
 def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
@@ -27,5 +27,6 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
                 ],
                 style={"display": "flex"},
             ),
+            map.render(app, data),
         ],
     )

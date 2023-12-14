@@ -3,6 +3,7 @@ import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
 
 
+# TODO: change dropdown to radio items
 def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
     if filter:
         data = data[data["gender"] == filter]
@@ -32,7 +33,15 @@ def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
     return html.Div(
         [
             html.H3(piechart_title),
-            dcc.Dropdown([2020, 2021], 2020, id=f"piechart-dropdown-{filter}"),
+            dcc.RadioItems(
+                options=[
+                    {"label": " 2020 ", "value": 2020},
+                    {"label": " 2021 ", "value": 2021},
+                ],
+                value=2020,
+                id=f"piechart-dropdown-{filter}",
+                style={"padding": "10px"},
+            ),
             dcc.Graph(f"pie-chart-{filter}"),
         ],
         style={"padding": 10, "display": "inline-block", "flex": 1},
