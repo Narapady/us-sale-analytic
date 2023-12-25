@@ -25,24 +25,29 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
             color="region",
             hover_name="state",
             scope="usa",
-            width=1500,  # Bigger size
-            height=900,  # Bigger size
+            width=900,  # Bigger size
+            height=700,  # Bigger size
         )
 
         return fig
 
     return html.Div(
         [
-            html.H3("Map plot"),
-            dcc.RadioItems(
-                options=[
-                    {"label": " 2020 ", "value": 2020},
-                    {"label": " 2021 ", "value": 2021},
-                ],
-                value=2020,
-                id="map-radio-item",
-                style={"padding": "10px"},
+            html.Div(
+                [
+                    html.H3("Map plot"),
+                    dcc.RadioItems(
+                        options=[
+                            {"label": " 2020 ", "value": 2020},
+                            {"label": " 2021 ", "value": 2021},
+                        ],
+                        value=2020,
+                        id="map-radio-item",
+                        style={"padding": "10px", "display": "inline-block"},
+                    ),
+                ]
             ),
-            dcc.Graph("map"),
+            dcc.Graph("map", style={"padding": "50px"}),
         ],
+        style={"padding": 10, "display": "flex", "flex": 1},
     )
