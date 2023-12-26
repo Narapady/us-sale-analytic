@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html, dash_table
-from components.color import BG_COLOR, FG_COLOR
+from components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
 
 
 def render(app: Dash, data: pd.DataFrame) -> html.Div:
@@ -54,17 +54,18 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
         [
             html.Div(
                 [
-                    html.H3("TOTAL SALE BY REGION", style={"color": FG_COLOR}),
+                    html.H3("TOTAL SALE BY REGION", style={"color": COMPONENT_COLOR}),
                     dcc.RadioItems(
                         options=[
                             {"label": " 2020 ", "value": 2020},
                             {"label": " 2021 ", "value": 2021},
                         ],
+                        labelStyle={"display": "inline-block", "margin-right": "20px"},
                         value=2020,
                         id="map-radio-item",
                         style={
                             "padding": "10px",
-                            "display": "inline-block",
+                            "display": "inline-flex",
                             "color": FG_COLOR,
                         },
                     ),

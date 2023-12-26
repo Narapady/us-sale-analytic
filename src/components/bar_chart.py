@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
-from components.color import BG_COLOR, FG_COLOR
+from components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
 
 
 def render(app: Dash, data: pd.DataFrame) -> html.Div:
@@ -33,7 +33,7 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
 
     return html.Div(
         children=[
-            html.H3("TOP 10 TOTAL SALES", style={"color": FG_COLOR}),
+            html.H3("TOP 10 TOTAL SALES", style={"color": COMPONENT_COLOR}),
             dcc.Dropdown(
                 options=[
                     {"label": "state", "value": "state"},

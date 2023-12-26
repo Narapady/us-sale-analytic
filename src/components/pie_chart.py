@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
-from components.color import BG_COLOR, FG_COLOR
+from components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
 
 
 def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
@@ -40,18 +40,19 @@ def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
     )
     return html.Div(
         [
-            html.H3(piechart_title, style={"color": FG_COLOR}),
+            html.H3(piechart_title, style={"color": COMPONENT_COLOR}),
             dcc.RadioItems(
                 options=[
                     {"label": " 2020 ", "value": 2020},
                     {"label": " 2021 ", "value": 2021},
                 ],
+                labelStyle={"display": "inline-block", "margin-right": "20px"},
                 value=2020,
                 id=f"piechart-dropdown-{filter}",
                 style={
-                    "padding": "10px",
                     "backgroundColor": BG_COLOR,
                     "color": FG_COLOR,
+                    "display": "inline-flex",
                 },
             ),
             dcc.Graph(f"pie-chart-{filter}"),

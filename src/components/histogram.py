@@ -2,7 +2,7 @@ from operator import xor
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
-from components.color import BG_COLOR, FG_COLOR
+from components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
 
 
 def render(app: Dash, data: pd.DataFrame) -> html.Div:
@@ -30,7 +30,7 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
 
     return html.Div(
         children=[
-            html.H3("MALE/FEMALE TOTAL PURCHASE", style={"color": FG_COLOR}),
+            html.H3("MALE/FEMALE TOTAL PURCHASE", style={"color": COMPONENT_COLOR}),
             dcc.Dropdown(
                 data["year"].unique().tolist(),
                 2020,
