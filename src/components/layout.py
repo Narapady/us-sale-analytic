@@ -1,7 +1,7 @@
 from re import M
 import pandas as pd
 from dash import Dash, html
-from components.color import BG_COLOR
+from components.color import BG_COLOR, FG_COLOR
 
 from . import bar_chart, histogram, map, pie_chart, table
 
@@ -10,7 +10,7 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
     return html.Div(
         className="app-container",
         children=[
-            html.H1(app.title, "app-title"),
+            html.H1(app.title, "app-title", style={"color": FG_COLOR}),
             html.Hr(),
             table.render(app, data),
             html.Hr(),
@@ -31,5 +31,9 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
             ),
             map.render(app, data),
         ],
-        style={"padding": "0 2rem", "backgroundColor": BG_COLOR},
+        style={
+            "padding": "0 2rem",
+            "backgroundColor": BG_COLOR,
+            "fontFamily": "JetBrains Mono",
+        },
     )

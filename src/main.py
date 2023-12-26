@@ -3,6 +3,7 @@ from components.layout import create_layout
 from dash import Dash
 from dash_bootstrap_components.themes import BOOTSTRAP
 from data.data_loader import load_us_sale_data, us_sale_df
+from components.color import FG_COLOR
 
 
 def main():
@@ -11,6 +12,7 @@ def main():
     # data = us_sale_df(client)
     data = load_us_sale_data("./src/data/obt.csv")
     app = Dash(external_stylesheets=[BOOTSTRAP])
+    app.title = "US SALE DASBOARD"
     app.layout = create_layout(app, data)
     app.run(debug=True)
 

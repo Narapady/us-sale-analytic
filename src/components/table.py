@@ -6,10 +6,10 @@ from components.color import BG_COLOR, FG_COLOR
 def render(app: Dash, data: pd.DataFrame) -> html.Div:
     return html.Div(
         [
-            html.H3("US Sales Dataset (First 20 Rows)", style={"color": FG_COLOR}),
+            html.H3("US Sales Dataset (First 10 Rows)", style={"color": FG_COLOR}),
             dash_table.DataTable(
-                data.head(20).to_dict("records"),
-                [{"name": i, "id": i} for i in data.columns],
+                data=data.head(10).to_dict("records"),
+                columns=[{"name": i, "id": i} for i in data.columns],
                 style_table={
                     "overflowX": "auto",
                     "color": FG_COLOR,
@@ -23,5 +23,4 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
                 ],
             ),
         ],
-        className="app-table",
     )

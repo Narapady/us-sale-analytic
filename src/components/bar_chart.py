@@ -15,7 +15,13 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
             .sort_values(by="total_amount", ascending=False)
             .head(10)
         )
-        fig = px.bar(df, x=selected, y="total_amount", color=selected)
+        fig = px.bar(
+            df,
+            x=selected,
+            y="total_amount",
+            color=selected,
+            color_discrete_sequence=px.colors.qualitative.T10,
+        )
         fig.update_layout(
             plot_bgcolor=BG_COLOR,
             paper_bgcolor=BG_COLOR,

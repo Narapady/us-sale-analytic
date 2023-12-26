@@ -17,6 +17,7 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
             color="gender",
             barmode="group",
             height=400,
+            color_discrete_sequence=px.colors.qualitative.T10,
         )
         fig.update_layout(
             xaxis_title="Product Category",

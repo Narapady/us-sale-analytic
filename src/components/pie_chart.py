@@ -20,7 +20,12 @@ def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
             .reset_index()
             .sort_values(by="total_amount", ascending=True)
         )
-        fig = px.pie(df, values="total_amount", names="month_name")
+        fig = px.pie(
+            df,
+            values="total_amount",
+            names="month_name",
+            color_discrete_sequence=px.colors.qualitative.T10,
+        )
         fig.update_layout(
             plot_bgcolor=BG_COLOR, paper_bgcolor=BG_COLOR, font_color=FG_COLOR
         )
