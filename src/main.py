@@ -9,8 +9,6 @@ def main():
     # cred_filepath = "/Users/narapadychhuoy/Repos/us_sale/us-sale-cred.json"
     # client = bigquery_client(cred_filepath)
     # data = us_sale_df(client)
-    hello = "Hello World"
-    a = hello + "world"
     data = load_us_sale_data("./src/data/obt.csv")
     app = Dash(external_stylesheets=[BOOTSTRAP])
     app.layout = create_layout(app, data)

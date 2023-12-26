@@ -1,9 +1,9 @@
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
+from components.color import BG_COLOR, FG_COLOR
 
 
-# TODO: change dropdown to radio items
 def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
     if filter:
         data = data[data["gender"] == filter]
@@ -21,6 +21,9 @@ def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
             .sort_values(by="total_amount", ascending=True)
         )
         fig = px.pie(df, values="total_amount", names="month_name")
+        fig.update_layout(
+            plot_bgcolor=BG_COLOR, paper_bgcolor=BG_COLOR, font_color=FG_COLOR
+        )
         return fig
 
     piechart_title = (
@@ -32,7 +35,7 @@ def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
     )
     return html.Div(
         [
-            html.H3(piechart_title),
+            html.H3(piechart_title, style={"color": FG_COLOR}),
             dcc.RadioItems(
                 options=[
                     {"label": " 2020 ", "value": 2020},
@@ -40,7 +43,11 @@ def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
                 ],
                 value=2020,
                 id=f"piechart-dropdown-{filter}",
-                style={"padding": "10px"},
+                style={
+                    "padding": "10px",
+                    "backgroundColor": BG_COLOR,
+                    "color": BG_COLOR,
+                },
             ),
             dcc.Graph(f"pie-chart-{filter}"),
         ],

@@ -1,5 +1,7 @@
+from re import M
 import pandas as pd
 from dash import Dash, html
+from components.color import BG_COLOR
 
 from . import bar_chart, group_bar_chat, map, pie_chart, table
 
@@ -29,4 +31,5 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
             ),
             map.render(app, data),
         ],
+        style={"padding": "0 2rem", "backgroundColor": BG_COLOR},
     )

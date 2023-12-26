@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
+from components.color import BG_COLOR, FG_COLOR
 
 
 def render(app: Dash, data: pd.DataFrame) -> html.Div:
@@ -16,12 +17,20 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
             barmode="group",
             height=400,
         )
+        fig.update_layout(
+            plot_bgcolor=BG_COLOR, paper_bgcolor=BG_COLOR, font_color=FG_COLOR
+        )
         return fig
 
     return html.Div(
         children=[
-            html.H3("Female Vs Male Purchases"),
-            dcc.Dropdown(data["year"].unique().tolist(), 2020, id="group-bar-dropdown"),
+            html.H3("Female Vs Male Purchases", style={"color": FG_COLOR}),
+            dcc.Dropdown(
+                data["year"].unique().tolist(),
+                2020,
+                id="group-bar-dropdown",
+                style={"backgroundColor": BG_COLOR, "color": BG_COLOR},
+            ),
             dcc.Graph(
                 id="gender_sale",
             ),
