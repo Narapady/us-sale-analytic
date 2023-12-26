@@ -1,3 +1,4 @@
+from operator import xor
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
@@ -18,13 +19,17 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
             height=400,
         )
         fig.update_layout(
-            plot_bgcolor=BG_COLOR, paper_bgcolor=BG_COLOR, font_color=FG_COLOR
+            xaxis_title="Product Category",
+            yaxis_title="Total Sale",
+            plot_bgcolor=BG_COLOR,
+            paper_bgcolor=BG_COLOR,
+            font_color=FG_COLOR,
         )
         return fig
 
     return html.Div(
         children=[
-            html.H3("Female Vs Male Purchases", style={"color": FG_COLOR}),
+            html.H3("MALE/FEMALE TOTAL PURCHASE", style={"color": FG_COLOR}),
             dcc.Dropdown(
                 data["year"].unique().tolist(),
                 2020,

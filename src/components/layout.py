@@ -3,7 +3,7 @@ import pandas as pd
 from dash import Dash, html
 from components.color import BG_COLOR
 
-from . import bar_chart, group_bar_chat, map, pie_chart, table
+from . import bar_chart, histogram, map, pie_chart, table
 
 
 def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
@@ -17,7 +17,7 @@ def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
             html.Div(
                 [
                     bar_chart.render(app, data),
-                    group_bar_chat.render(app, data),
+                    histogram.render(app, data),
                 ],
                 style={"display": "flex"},
             ),

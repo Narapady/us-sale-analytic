@@ -46,7 +46,7 @@ def render(app: Dash, data: pd.DataFrame, filter="") -> html.Div:
                 style={
                     "padding": "10px",
                     "backgroundColor": BG_COLOR,
-                    "color": BG_COLOR,
+                    "color": FG_COLOR,
                 },
             ),
             dcc.Graph(f"pie-chart-{filter}"),

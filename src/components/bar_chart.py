@@ -17,13 +17,17 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
         )
         fig = px.bar(df, x=selected, y="total_amount", color=selected)
         fig.update_layout(
-            plot_bgcolor=BG_COLOR, paper_bgcolor=BG_COLOR, font_color=FG_COLOR
+            plot_bgcolor=BG_COLOR,
+            paper_bgcolor=BG_COLOR,
+            font_color=FG_COLOR,
+            xaxis_title=str(selected).capitalize(),
+            yaxis_title="Total Sale",
         )
         return fig
 
     return html.Div(
         children=[
-            html.H3("Top 10 Total Sales Amount", style={"color": FG_COLOR}),
+            html.H3("TOP 10 TOTAL SALES", style={"color": FG_COLOR}),
             dcc.Dropdown(
                 options=[
                     {"label": "state", "value": "state"},
@@ -36,7 +40,7 @@ def render(app: Dash, data: pd.DataFrame) -> html.Div:
                 ],
                 value="state",
                 id="barchart-dropdown",
-                style={"backgroundColor": BG_COLOR, "color": BG_COLOR},
+                style={"backgroundColor": BG_COLOR, "color": FG_COLOR},
             ),
             dcc.Graph(id="selected_col"),
         ],
