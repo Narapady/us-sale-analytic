@@ -2,6 +2,7 @@
 
 # Analysis
 ## US Sale Transaction
+
 ```mermaid
 erDiagram
     dim_customer ||--|{ fct_sales: contained_in
@@ -69,8 +70,6 @@ erDiagram
         timestamp created_at
     }
 ```
-## Metrics
-1. 
 
 
 
