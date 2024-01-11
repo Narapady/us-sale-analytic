@@ -1,6 +1,6 @@
 import pandas as pd
 from dash import Dash, dash_table, html
-from components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
+from src.components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
 
 
 def render(app: Dash, data: pd.DataFrame) -> html.Div:

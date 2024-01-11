@@ -1,8 +1,7 @@
-from operator import xor
 import pandas as pd
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
-from components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
+from src.components.color import BG_COLOR, COMPONENT_COLOR, FG_COLOR
 
 
 def render(app: Dash, data: pd.DataFrame) -> html.Div:

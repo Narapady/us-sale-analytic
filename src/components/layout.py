@@ -1,6 +1,6 @@
 import pandas as pd
 from dash import Dash, html
-from components.color import BG_COLOR, TITLE_COLOR
+from src.components.color import BG_COLOR, TITLE_COLOR
 
 from . import bar_chart, histogram, map, pie_chart, table
 
