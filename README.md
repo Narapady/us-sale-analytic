@@ -4,7 +4,6 @@
 Data Pipeline that ingests **US Sales** Data from local CSV file. Then data is loaded to the local 
 Postgres database and Google BigQuery for further transformation. DBT is used to transform data
 in BigQuery and Dash is used for visualizing data.
-## Architecture
 ## Data Sources
 [US Sale Dataset](https://www.kaggle.com/datasets/ytgangster/online-sales-in-usa) is from [Kaggle](www.kaggle.com)
 ### About the dataset
@@ -15,8 +14,27 @@ sales by understanding the customers' purchasing behavior & patterns. Market bas
 relationships between items that go together within the business context.
 
 ## Data Pipeline
-### Dimensional Modeling
+```mermaid
+flowchart LR
+    sales.csv --Transform and Load --> postgres[(Postgres)]
+    sales.csv --Transform and Load --> bigquery[(BigQuery)]
+    bigquery[(BigQuery)] -- Transform --> dbt{DBT}
+    dbt{DBT} -- Transform --> id3[(BigQuery)]
+    id3[(BigQuery)] -- Render --> dash((DASH APP))
 
+
+
+```
+###  Libraries and APIs
+- pandas: Pandas is a popular open-source library in Python used for data manipulation and analysis.
+- Dash: Dash is a productive web application framework in Python used for building interactive web applications.
+  It is based on Flask, Plotly, and React.js, and allows you to create data-driven applications with a user-friendly interface. 
+- DBT: Stands for "Data Build Tool", a transformation framework that uses SQL and Jinja templating allowing users to transform data in various
+  databases and data warehouses: BigQuery, Snowflake, RedShift, Postgres, SQL Server ..etc.
+- Postgres: open-source relational database management system
+- Google BigQuery: Google's distributed analytic database or data warehouse.
+### Dimensional Modeling
+#### US Sale Schema in Google BigQuery
 ```mermaid
 erDiagram
     dim_customer ||--|{ fct_sales: contained_in
