@@ -54,9 +54,9 @@ flowchart LR
     ├── snapshots
     └── tests
 ```
-#### Directory Description
+#### Directory Descriptions
 - **dataset**: raw and preprocessed US Sales dataset in CSV format
-- **etl**: python scripts that handle some initial data preprocessing before loading to Postgres and BigQuery
+- **etl**: python scripts that handle some initial data preprocessing and load data to Postgres and BigQuery
 - **src**: python scripts that handle building Dash app
 - **us_sale_project**: DBT project folder. There are 3 directories in dbt models directory:
   - **dim**: models for dimension tables
@@ -133,5 +133,6 @@ erDiagram
         timestamp created_at
     }
 ```
-## Dash App
-
+## Screenshots of Dash App
+![](./src/dash_screenshots/screenshot1.png)
+![](./src/dash_screenshots/screenshot2.png)
