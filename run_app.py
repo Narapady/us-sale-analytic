@@ -7,14 +7,13 @@ from src.data.data_loader import us_sale_df, load_us_sale_data
 
 def main():
     # NOTE: load data from BigQuery
-    # cred_filepath = "/Users/narapadychhuoy/Repos/us_sale/us-sale-cred.json"
-    # bigquery = BigqueryClient(cred_filepath)
-    # client = bigquery.client()
-    #
-    # data = us_sale_df(client)
+    cred_filepath = "/Users/narapadychhuoy/Repos/us_sale/us-sale-cred.json"
+    bigquery = BigqueryClient(cred_filepath)
+    client = bigquery.client()
+    data = us_sale_df(client)
 
-    # # NOTE: Load data from local file
-    data = load_us_sale_data("./src/data/obt.csv")
+    # NOTE: Load data from local file
+    # data = load_us_sale_data("./src/data/obt.csv")
 
     app = Dash(external_stylesheets=[BOOTSTRAP])
     app.title = "US SALE DASBOARD"

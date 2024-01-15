@@ -8,4 +8,6 @@ tests
 .gitkeep
 poetry.lock
 us-sale-cred.json
-.env
+*/__pycache__/
+*.pyc
+.git
